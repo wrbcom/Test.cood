@@ -1,3 +1,5 @@
+// 解析 float 浮点数的二进制结构，并将符号位、指数位和尾数位分别输出为二进制字符串。
+
 #include <stdio.h>
 #include <stdlib.h>
 
