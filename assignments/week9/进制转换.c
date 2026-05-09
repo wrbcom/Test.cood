@@ -21,6 +21,5 @@ int main()
     printf("exp:%s\n", strBin);
     itoa(p->nMant, strBin, 2);
     printf("mant:%s\n", strBin);
-
     return 0;
 }
