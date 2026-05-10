@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>如何正确认识人的本质 | 哲学演讲</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, 'Inter', sans-serif;
+            background: linear-gradient(145deg, #e8f1f7 0%, #f5ede2 100%);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* 幻灯片容器 */
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0s 0.5s;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease, visibility 0s 0s;
+        }
+
+        /* 自定义滚动条 */
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .slide::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        .slide::-webkit-scrollbar-thumb {
+            background: rgba(108, 138, 255, 0.4);
+            border-radius: 10px;
+        }
+
+        /* 卡片风格 — 毛玻璃 + 现代感 */
+        .card {
+            max-width: 95%;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+            padding: 3.5rem 4.5rem;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* 标题区装饰 */
+        .title-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4a6eff, #9f7aff);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+        }
+
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(125deg, #1f2a4e, #3b4b8c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.3rem;
+            color: #1f2a4e;
+            margin-top: 0.8rem;
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+            border-left: 5px solid #6c8aff;
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.55rem;
+            color: #2c3e66;
+            margin: 1rem 0 0.5rem;
+            font-weight: 500;
+        }
+
+        p,
+        li {
+            font-size: 1.45rem;
+            line-height: 1.8;
+            color: #2d3a4b;
+            margin-top: 1rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #f9f1c0 0%, #f9f1c0 40%, transparent 60%);
+            padding: 0 0.3rem;
+            font-weight: 600;
+            color: #2c3e66;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid #6c8aff;
+            background: rgba(108, 138, 255, 0.08);
+            padding: 1.5rem 2rem;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0;
+            font-size: 1.25rem;
+            color: #2c3e55;
+            line-height: 1.7;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .grid-3col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+
+        .insight-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1.5rem 1.8rem;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03);
+            border: 1px solid #eef2fa;
+            font-size: 1.15rem;
+            line-height: 1.6;
+        }
+
+        .emoji-big {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footnote {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #7a8b9e;
+            font-style: italic;
+        }
+
+        /* 导航控制 */
+        .nav-controls {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            gap: 0.8rem;
+            z-index: 100;
+            background: rgba(255, 255, 240, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 0.6rem 1rem;
+            border-radius: 60px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .nav-btn {
+            background: #ffffffcc;
+            border: none;
+            font-size: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c3e66;
+            font-weight: bold;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            background: #6c8aff;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .page-indicator {
+            position: fixed;
+            bottom: 1.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 100;
+        }
+
+        .bold {
+            font-weight: 700;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+        }
+
+        ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .card {
+                padding: 1.5rem 2rem;
+            }
+
+            .grid-2col,
+            .grid-3col {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-controls {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 0.5rem 0.8rem;
+            }
+
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="presentation-container">
+        <div class="slides-wrapper" id="slidesWrapper">
+            <!-- 幻灯片 0：开场 -->
+            <div class="slide active" data-index="0">
+                <div class="card">
+                    <div class="title-badge">🎯 引言</div>
+                    <h1>如何正确认识<br>人的本质</h1>
+                    <p style="font-size: 1.3rem; margin-top: 2rem; color: #3b4b8c;">尊敬的老师，亲爱的同学们：</p>
+                    <p>古希腊神话中有一个著名的谜语：</p>
+                    <div class="quote">
+                        "什么生物早晨四条腿，中午两条腿，晚上三条腿？"<br>
+                        — 斯芬克斯的千古之问
+                    </div>
+                    <p>俄狄浦斯给出了正确答案：<span class="highlight">人</span></p>
+                    <p>这个谜语向我们揭示了一个最古老、最根本的困惑：<strong>我是谁？人的本质究竟是什么？</strong></p>
+                </div>
+            </div>
+
+            <!-- 幻灯片 1：斯芬克斯之谜 -->
+            <div class="slide" data-index="1">
+                <div class="card">
+                    <div class="title-badge">🧩 斯芬克斯之谜</div>
+                    <h2>"我们认识万物，却最难认识自己"</h2>
+                    <p>这不仅是古希腊德尔斐神庙上的神谕，更是我们每个人一生中都要思考的终极问题。</p>
+                    <div class="quote">
+                        我们认识宇宙的浩瀚，解析基因的奥秘，却常常在"自我定义"中迷失。<br><br>
+                        <strong>我们真的认识自己吗？</strong>
+                    </div>
+                    <p>✨ 在这次的演讲中，我想与各位一起探讨一个深刻的哲学问题：</p>
+                    <h3 style="text-align: center; margin-top: 2rem; color: #4a6eff;">如何正确认识人的本质？</h3>
+                </div>
+            </div>
+
+            <!-- 幻灯片 2：破除误解 -->
+            <div class="slide" data-index="2">
+                <div class="card">
+                    <div class="title-badge">⚠️ 破除误解</div>
+                    <h2>"人的本质，不是单个人所固有的抽象物"</h2>
+                    <p>在日常学习中，我们习惯用标签定义人：</p>
+                    <div class="grid-2col">
+                        <div class="insight-card">
+                            <strong>❌ 理性的动物</strong><br>
+                            抓住了某些特征，却不够全面
+                        </div>
+                        <div class="insight-card">
+                            <strong>❌ 会制造工具的个体</strong><br>
+                            忽视了人的社会性
+                        </div>
+                    </div>
+                    <p>这些定义有什么问题呢？</p>
+                    <div class="insight-card" style="background:#f0f3fe;">
+                        <span class="emoji-big">🐺</span>
+                        <strong>历史案例：狼孩</strong><br>
+                        1920年印度发现的"狼孩"卡玛拉，拥有人的血肉，却不会直立行走，没有语言，缺乏情感认知。<br>
+                        ➜ <strong>脱离人类社会环境，"人"的特质无法自然生长</strong>
+                    </div>
+                    <p><strong>启示：</strong>人的本质不在生物学基因里，而在于我们<span class="highlight">与世界的联结</span>之中。</p>
+                </div>
+            </div>
+
+            <!-- 幻灯片 3：核心命题 -->
+            <div class="slide" data-index="3">
+                <div class="card">
+                    <div class="title-badge">📖 核心命题</div>
+                    <h2>"人的本质，是一切社会关系的总和"</h2>
+                    <p style="color: #666;">— 马克思《关于费尔巴哈的提纲》</p>
+                    <div class="quote">
+                        如果把一个人比作一颗<span class="highlight">钻石</span>，那么"社会关系"就是切割它的<strong>无数个切面</strong>。<br><br>
+                        你是父母的<strong>子女</strong><br>
+                        你是老师的<strong>学生</strong><br>
+                        你是朋友的<strong>朋友</strong><br>
+                        你是社团的<strong>成员</strong><br>
+                        你未来还将是某个岗位的<strong>劳动者</strong>……<br><br>
+                        <span class="bold">所有这些身份、责任、情感和交往的总和 = "你"</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 4：社会关系的来源 -->
+            <div class="slide" data-index="4">
+                <div class="card">
+                    <div class="title-badge">🌱 社会关系塑造你</div>
+                    <h2>你的特质源于何处？</h2>
+                    <div class="grid-2col">
+                        <div class="insight-card">
+                            <span class="emoji-big">✨</span>
+                            <strong>你的善良</strong><br>
+                            来源于<strong>家庭与学校</strong>的共情教育
+                        </div>
+                        <div class="insight-card">
+                            <span class="emoji-big">💪</span>
+                            <strong>你的勤奋</strong><br>
+                            源于<strong>社会文化</strong>对奋斗精神的推崇
+                        </div>
+                        <div class="insight-card">
+                            <span class="emoji-big">⚖️</span>
+                            <strong>你的规则意识</strong><br>
+                            植根于<strong>法治社会</strong>的实践
+                        </div>
+                        <div class="insight-card">
+                            <span class="emoji-big">🌍</span>
+                            <strong>你的整个自我</strong><br>
+                            扎根于<strong>社会生态网络</strong>中
+                        </div>
+                    </div>
+                    <p style="text-align: center; margin-top: 1.5rem; font-size: 1.2rem; color: #4a6eff;">
+                        <strong>脱离社会关系，人就不再是现代意义上的人</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 幻灯片 5：现实意义（一）拒绝利己 -->
+            <div class="slide" data-index="5">
+                <div class="card">
+                    <div class="title-badge">💡 现实意义·其一</div>
+                    <h2>拒绝"精致的利己主义"</h2>
+                    <p>认识到人是社会关系的总和，就意味着：</p>
+                    <div class="quote">
+                        你的生活不是孤岛。你的每一次成功，背后都有老师、同学、家人的支持。
+                    </div>
+                    <div class="insight-card" style="background: #fff9e6;">
+                        <span class="emoji-big">🎯</span>
+                        <strong>问自己：</strong><br>
+                        当我只盯着自己的成绩、自己的利益时，往往会陷入狭隘。<br>
+                        我是否忽视了他人的支持和社会的贡献？
+                    </div>
+                    <p><strong>正确做法：</strong></p>
+                    <ul>
+                        <li>✅ 学会在<span class="highlight">成就他人</span>中成就自己</li>
+                        <li>✅ 在<span class="highlight">奉献社会</span>中实现个人价值</li>
+                        <li>✅ 理解竞争不是零和游戏，而是<span class="highlight">共赢的舞台</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 幻灯片 6：现实意义（二）避免虚拟异化 -->
+            <div class="slide" data-index="6">
+                <div class="card">
+                    <div class="title-badge">💡 现实意义·其二</div>
+                    <h2>在虚拟时代避免异化</h2>
+                    <p>今天，我们身处互联网时代。</p>
+                    <div class="quote">
+                        很多人沉迷于游戏、短视频，在虚拟关系中寻找存在感，却忽视了现实中真实的亲情和友情。
+                    </div>
+                    <div class="insight-card" style="background: #ffe8f0;">
+                        <span class="emoji-big">📱</span>
+                        <strong>异化的危险：</strong><br>
+                        从"社会关系的人"退化为"数据孤岛上的人"
+                    </div>
+                    <p><strong>正确选择：</strong></p>
+                    <ul>
+                        <li>💭 一段<span class="highlight">真实的、积极的、深度的关系</span></li>
+                        <li>💭 远比<span class="highlight">几百个点赞的虚拟关注</span>更重要</li>
+                        <li>💭 <strong>保护你的真实人际网络</strong>，是保护你的人性</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 幻灯片 7：现实意义（三）构建者 -->
+            <div class="slide" data-index="7">
+                <div class="card">
+                    <div class="title-badge">💡 现实意义·其三</div>
+                    <h2>成为主动的"构建者"</h2>
+                    <p>社会关系塑造了我们，但我们不是被动接受者。</p>
+                    <div class="quote">
+                        我们可以通过自己的劳动、学习和选择，去改变和优化这些关系。
+                    </div>
+                    <div class="grid-3col">
+                        <div class="insight-card">
+                            <span class="emoji-big">🚌</span>
+                            <strong>让座</strong><br>
+                            构建了一种<span class="highlight">文明的关系</span>
+                        </div>
+                        <div class="insight-card">
+                            <span class="emoji-big">👥</span>
+                            <strong>团队承担</strong><br>
+                            构建了一种<span class="highlight">信任的关系</span>
+                        </div>
+                        <div class="insight-card">
+                            <span class="emoji-big">🤝</span>
+                            <strong>志愿服务</strong><br>
+                            构建了一种<span class="highlight">奉献的关系</span>
+                        </div>
+                    </div>
+                    <p style="text-align: center; font-size: 1.15rem; margin-top: 1.5rem; color: #4a6eff;">
+                        <strong>你是谁，不仅取决于你拥有什么，<br>更取决于你做了什么</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 幻灯片 8：结语 -->
+            <div class="slide" data-index="8">
+                <div class="card">
+                    <div class="title-badge">🎯 结语</div>
+                    <h2>做一个大写的人</h2>
+                    <p>俄狄浦斯虽然猜出了"斯芬克斯之谜"的谜底，但他自己的一生却充满了悲剧——因为他始终没有真正认识自己的身世和命运。</p>
+                    <div class="quote" style="background: linear-gradient(120deg, #eef4ff, #ffffff);">
+                        而我们这代人，肩负着民族复兴的重任。<br><br>
+                        只有正确地认识人的本质——认识到我们是<span class="highlight">社会关系的总和</span>，是历史的、具体的、生活在现实世界中的人——我们才能找准自己的定位，在时代的洪流中不迷失方向。
+                    </div>
+                    <p style="text-align: center; margin-top: 2rem; font-size: 1.15rem;">
+                        <strong>认识你自己，就是去拥抱所有的社会关系；</strong><br>
+                        <strong>超越你自己，就是用行动编织更美好的关系网络。</strong>
+                    </p>
+                    <p style="text-align: center; margin-top: 2rem; font-size: 1.3rem; color: #4a6eff;">
+                        ✨ 做一个清醒的、有担当的、<strong>大写的人</strong>！✨
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn" aria-label="上一页">←</button>
+            <button class="nav-btn" id="nextBtn" aria-label="下一页">→</button>
+        </div>
+        <div class="page-indicator" id="pageIndicator">1 / 9</div>
+    </div>
+
+    <script>
+        (function () {
+            const slides = document.querySelectorAll('.slide');
+            let currentIdx = 0;
+            const total = slides.length;
+            const wrapper = document.getElementById('slidesWrapper');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const indicator = document.getElementById('pageIndicator');
+
+            function updateSlides() {
+                slides.forEach((slide, idx) => {
+                    if (idx === currentIdx) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+                indicator.innerText = `${currentIdx + 1} / ${total}`;
+            }
+
+            function goNext() {
+                if (currentIdx < total - 1) {
+                    currentIdx++;
+                    updateSlides();
+                }
+            }
+
+            function goPrev() {
+                if (currentIdx > 0) {
+                    currentIdx--;
+                    updateSlides();
+                }
+            }
+
+            // 键盘监听
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    goNext();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    goPrev();
+                }
+            });
+
+            prevBtn.addEventListener('click', goPrev);
+            nextBtn.addEventListener('click', goNext);
+
+            // 触摸滑动
+            let touchStartX = 0;
+            let touchEndX = 0;
+            wrapper.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            wrapper.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                if (touchEndX < touchStartX - 40) goNext();
+                if (touchEndX > touchStartX + 40) goPrev();
+            });
+
+            // 初始状态
+            updateSlides();
+        })();
+    </script>
+</body>
+
+</html>
