@@ -3,29 +3,29 @@
 void main()
 {
     int score;
-    printf("è¾“å…¥æˆç»©:");
+    printf("ÊäÈë³É¼¨:");
     scanf("%d", &score);
     if (score < 0 || score > 100)
-        printf("éæ³•æ•°å­—è¾“å…¥ï¼ï¼\n");
+        printf("·Ç·¨Êı×ÖÊäÈë£¡£¡\n");
     else
     {
         switch (score / 10)
         {
         case 10:
         case 9:
-            printf("ç­‰çº§ä¸º:A\n");
+            printf("µÈ¼¶Îª:A\n");
             break;
         case 8:
-            printf("ç­‰çº§ä¸º:B\n");
+            printf("µÈ¼¶Îª:B\n");
             break;
         case 7:
-            printf("ç­‰çº§ä¸º:C\n");
+            printf("µÈ¼¶Îª:C\n");
             break;
         case 6:
-            printf("ç­‰çº§ä¸º:D\n");
+            printf("µÈ¼¶Îª:D\n");
             break;
         default:
-            printf("ç­‰çº§ä¸º:E\n");
+            printf("µÈ¼¶Îª:E\n");
             break;
         }
     }

@@ -5,15 +5,15 @@ int main()
     int answer = 0;
     char choice;
 
-    printf("=== 1~60 çŒœæ•°å­—æ¸¸æˆ ===\n");
-    printf("è¯·åœ¨å¿ƒé‡Œæƒ³ä¸€ä¸ª 1~60 çš„æ•´æ•°ã€‚\n\n");
+    printf("=== 1~60 ²ÂÊı×ÖÓÎÏ· ===\n");
+    printf("ÇëÔÚĞÄÀïÏëÒ»¸ö 1~60 µÄÕûÊı¡£\n\n");
 
     for (int bit = 0; bit < 6; bit++)
     {
         int weight = 1 << bit;
         int count = 0;
 
-        printf("ç¬¬ %d å¼ å¡ï¼ˆæƒå€¼ %d):\n", bit + 1, weight);
+        printf("µÚ %d ÕÅ¿¨£¨È¨Öµ %d):\n", bit + 1, weight);
 
         for (int n = 1; n <= 60; n++)
         {
@@ -33,7 +33,7 @@ int main()
             printf("\n");
         }
 
-        printf("ä½ çš„æ•°å­—åœ¨è¿™å¼ å¡é‡Œå—ï¼Ÿ(y/n): ");
+        printf("ÄãµÄÊı×ÖÔÚÕâÕÅ¿¨ÀïÂğ£¿(y/n): ");
         scanf(" %c", &choice);
 
         if (choice == 'y' || choice == 'Y')
@@ -46,11 +46,11 @@ int main()
 
     if (answer >= 1 && answer <= 60)
     {
-        printf("ä½ æƒ³çš„æ•°å­—æ˜¯ï¼š%d\n", answer);
+        printf("ÄãÏëµÄÊı×ÖÊÇ£º%d\n", answer);
     }
     else
     {
-        printf("è¾“å…¥å¯èƒ½æœ‰è¯¯ï¼Œè¯·é‡æ–°è¿è¡Œç¨‹åºå¹¶æŒ‰ y/n å›ç­”ã€‚\n");
+        printf("ÊäÈë¿ÉÄÜÓĞÎó£¬ÇëÖØĞÂÔËĞĞ³ÌĞò²¢°´ y/n »Ø´ğ¡£\n");
     }
 
     return 0;
